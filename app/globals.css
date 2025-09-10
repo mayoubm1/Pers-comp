@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 @import "tailwindcss";
-@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -200,7 +199,7 @@
     font-family: var(--font-work-sans);
     font-weight: 500;
     font-size: var(--text-lg);
-    line-height: var(--leading-normal);
+  line-height: var(--leading-normal);
   }
 
   h6 {
