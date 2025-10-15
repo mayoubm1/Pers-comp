@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "tailwindcss";
-
-@custom-variant dark (&:is(.dark *));
-
 :root {
   /* Updated color palette to match design brief - emerald green theme for healing and growth */
   --background: oklch(1 0 0);

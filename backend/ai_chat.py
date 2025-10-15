@@ -64,7 +64,7 @@ Always provide substantive, research-focused responses that demonstrate your adv
             self.conversations[session_id].append({
                 "role": "user",
                 "content": message,
-                "timestamp": datetime.now().isoformat()
+                "timestamp": int(datetime.now().timestamp() * 1000)
             })
             
             # Prepare context from recent conversation
@@ -88,7 +88,7 @@ Always provide substantive, research-focused responses that demonstrate your adv
                 self.conversations[session_id].append({
                     "role": "assistant",
                     "content": ai_response,
-                    "timestamp": datetime.now().isoformat()
+                    "timestamp": int(datetime.now().timestamp() * 1000)
                 })
                 
                 return {
@@ -96,7 +96,7 @@ Always provide substantive, research-focused responses that demonstrate your adv
                     'response': ai_response,
                     'session_id': session_id,
                     'message_id': response.get('message_id', str(uuid.uuid4())),
-                    'timestamp': datetime.now().isoformat(),
+                    'timestamp': int(datetime.now().timestamp() * 1000),
                     'system': f'Gemini CLI - {character}',
                     'user_id': user_id,
                     'character': character,
@@ -111,7 +111,7 @@ Always provide substantive, research-focused responses that demonstrate your adv
                 'success': False,
                 'error': f'AI chat error: {str(e)}',
                 'session_id': session_id,
-                'timestamp': datetime.now().isoformat()
+                'timestamp': int(datetime.now().timestamp() * 1000)
             }
     
     def get_conversation_history(self, session_id: str) -> Dict[str, Any]:
@@ -152,7 +152,7 @@ Always provide substantive, research-focused responses that demonstrate your adv
                     'success': True,
                     'analysis': response['analysis'],
                     'analysis_id': response.get('analysis_id', str(uuid.uuid4())),
-                    'timestamp': datetime.now().isoformat(),
+                    'timestamp': int(datetime.now().timestamp() * 1000),
                     'data_description': data_description,
                     'user_id': user_id,
                     'confidence_score': response.get('confidence_score', 0.90),
@@ -203,7 +203,7 @@ Focus on actionable insights for TELSTP Life Science Park researchers."""
                 'insight_id': str(uuid.uuid4()),
                 'topic': topic,
                 'context': context,
-                'timestamp': datetime.now().isoformat(),
+                'timestamp': int(datetime.now().timestamp() * 1000),
                 'relevance_score': 0.92,
                 'research_areas': self._extract_research_areas(insight_content),
                 'action_items': self._extract_action_items(insight_content)
@@ -227,7 +227,7 @@ Focus on actionable insights for TELSTP Life Science Park researchers."""
                 'success': response['success'],
                 'results': response.get('results', ''),
                 'query': query,
-                'timestamp': datetime.now().isoformat(),
+                'timestamp': int(datetime.now().timestamp() * 1000),
                 'source': 'Gemini CLI Google Search'
             }
             
