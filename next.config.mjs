@@ -9,7 +9,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  allowedDevOrigins: ['local-origin.dev', '*.local-origin.dev'],
+  allowedDevOrigins: ['local-origin.dev', '*.local-origin.dev', '3000-firebase-pers-comp-1757473137291.cluster-fbfjltn375c6wqxlhoehbz44sk.cloudworkstations.dev', '3002-firebase-pers-comp-1757473137291.cluster-fbfjltn375c6wqxlhoehbz44sk.cloudworkstations.dev'],
 }
 
 export default nextConfig

@@ -34,19 +34,17 @@ export async function middleware(request: NextRequest) {
   const { data: { session } } = await supabase.auth.getSession();
   const { pathname } = request.nextUrl;
 
-  // If user is logged in and is on the root or login page, redirect to dashboard
-  if (session && (pathname === '/' || pathname === '/login')) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+  // If user is not logged in and not on the login page, redirect to login
+  if (!session && pathname !== '/login') {
+    if (pathname.startsWith('/auth/callback')) {
+        return response;
+    }
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  // If user is not logged in and is trying to access a protected route, redirect to login
-  if (!session && pathname.startsWith('/dashboard')) {
-    return NextResponse.redirect(new URL('/login', request.url));
-  }
-  
-    // If user is not logged in and on the root path, send them to the login page.
-  if (!session && pathname === '/') {
-    return NextResponse.redirect(new URL('/login', request.url));
+  // If user is logged in and is on the root or login page, redirect to characters page
+  if (session && (pathname === '/' || pathname === '/login')) {
+    return NextResponse.redirect(new URL('/characters', request.url));
   }
 
   return response;

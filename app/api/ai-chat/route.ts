@@ -43,9 +43,9 @@ export async function POST(request: NextRequest) {
     if (!mistralApiKey) {
       return NextResponse.json({ success: false, error: "Mistral API key not configured" }, { status: 500 })
     }
-
     try {
-      const mistralResponse = await fetch("https://api.mistral.ai/v1/chat/completions", {
+
+      if (!(await fetch("https://api.mistral.ai/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -60,13 +60,41 @@ export async function POST(request: NextRequest) {
           temperature: 0.7,
           max_tokens: 1000,
         }),
-      })
-
-      if (!mistralResponse.ok) {
-        throw new Error(`Mistral API error: ${mistralResponse.statusText}`)
+      })).ok) {
+        throw new Error(`Mistral API error: ${(await fetch("https://api.mistral.ai/v1/chat/completions", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${mistralApiKey}`,
+            },
+            body: JSON.stringify({
+              model: "mistral-large-latest",
+              messages: [
+                { role: "system", content: systemPrompt },
+                { role: "user", content: message },
+              ],
+              temperature: 0.7,
+              max_tokens: 1000,
+            }),
+          })).statusText}`)
       }
 
-      const mistralData = await mistralResponse.json()
+      const mistralData = await (await fetch("https://api.mistral.ai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${mistralApiKey}`,
+        },
+        body: JSON.stringify({
+          model: "mistral-large-latest",
+          messages: [
+            { role: "system", content: systemPrompt },
+            { role: "user", content: message },
+          ],
+          temperature: 0.7,
+          max_tokens: 1000,
+        }),
+      })).json()
       const aiResponse = mistralData.choices[0]?.message?.content || "I apologize, but I couldn'''t generate a response."
 
       const response = {
