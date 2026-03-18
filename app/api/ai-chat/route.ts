@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     const systemPrompt = generateSystemPrompt(characterObject);
     const characterId = characterObject?.id || 'unknown';
 
-    const mistralApiKey = process.env."0d2xZ6Nbczykp0WsoiE5QgmN5s8kruwn"
+    const mistralApiKey = process.env.MISTRAL_API_KEY
     if (!mistralApiKey) {
       return NextResponse.json({ success: false, error: "Mistral API key not configured" }, { status: 500 })
     }

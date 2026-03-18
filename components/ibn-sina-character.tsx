@@ -287,14 +287,14 @@ const IbnSinaCharacter = () => {
     <div className="fixed bottom-0 right-0 w-96 h-96 z-50">
       {/* Character container */}
       <div
-        className={`absolute bottom-0 right-0 transition-transform duration-1000 ${animations[emotions[currentEmotion].animation]}`}
+        className={`absolute bottom-0 right-0 transition-transform duration-1000 ${animations[emotions[currentEmotion as keyof typeof emotions].animation as keyof typeof animations]}`}
         style={{
           transform: `translate(${position.x}px, ${position.y}px)`,
         }}
       >
         <div
           className="w-64 h-64 cursor-pointer"
-          dangerouslySetInnerHTML={{ __html: emotions[currentEmotion].svgPath }}
+          dangerouslySetInnerHTML={{ __html: emotions[currentEmotion as keyof typeof emotions].svgPath }}
           onClick={() => handleResponseGeneration("Hello Ibn Sina")}
         />
 

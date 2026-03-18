@@ -21,7 +21,7 @@ export default function CharacterMemories() {
         }
         const data = await response.json()
         setMemories(data.character_memories || [])
-      } catch (error) {
+      } catch (error: any) {
         setError(error.message)
       }
     }

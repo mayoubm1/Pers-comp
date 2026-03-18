@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation'
 // This page is a user's private dashboard to view and manage their characters.
 
 export default async function CharactersPage() {
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -71,7 +71,7 @@ export default async function CharactersPage() {
                     <div className="mt-4 pt-4 border-t border-gray-700">
                         <h4 className="text-sm font-bold text-emerald-400">Specialties:</h4>
                         <div className="flex flex-wrap gap-2 mt-2">
-                            {character.specialties.map(spec => (
+                            {character.specialties.map((spec: string) => (
                                 <span key={spec} className="px-2 py-1 text-xs text-white bg-emerald-700 rounded-full">{spec}</span>
                             ))}
                         </div>
