@@ -19,14 +19,16 @@ export default function Login() {
   const handleSignIn = async () => {
     setLoading(true)
     setError('')
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) {
       setError(error.message)
+      setLoading(false)
+    } else if (data.session) {
+      window.location.href = '/characters'
     } else {
-      router.push('/characters')
-      router.refresh()
+      setError('Sign in failed. Please try again.')
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   const handleSignUp = async () => {
@@ -43,10 +45,8 @@ export default function Login() {
     } else if (data.user && !data.session) {
       setMessage('Check your email to confirm your account before signing in.')
     } else if (data.session) {
-      // Auto-confirmed (email confirmations disabled in Supabase)
       await createUserProfile(data.user!.id, email)
-      router.push('/characters')
-      router.refresh()
+      window.location.href = '/characters'
     }
     setLoading(false)
   }
