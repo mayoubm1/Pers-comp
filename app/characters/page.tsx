@@ -31,8 +31,8 @@ export default async function CharactersPage() {
 
   const { data: characters, error } = await supabase
     .from('characters')
-    .select(`id, name, role, description, avatar_url, gender, specialties`)
-    .eq('user_id', session.user.id)
+    .select(`id, name, role, description, avatar_url, gender, specialties, is_default`)
+    .or(`user_id.eq.${session.user.id},is_default.eq.true`)
 
   if (error) {
     console.error('Error fetching characters:', error)
